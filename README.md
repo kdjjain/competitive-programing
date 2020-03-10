@@ -1,0 +1,3 @@
+# competitive-programing
+here is all template for competitive programing
+it will the compititive programers to get a template for all topics like number theory , combinatorics , graphetc...
