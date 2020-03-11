@@ -1,14 +1,16 @@
 #include <bits/stdc++.h>                
 using namespace std;
-#define int long long int
+#define int long long int 
 #define ff first
 #define ss second
 #define ll  int 
-#define p 998244353
+#define p 1000000007
 vector<int >g[100005];
 int vis[100005];
 vector<double >ans;
 int ncr[2005][2005];
+int fact[1000000];
+int inv[1000000];
 void cal(){
 	ncr[0][0]=1;
 	for(int i=1; i<=2004; i++)
@@ -16,7 +18,7 @@ void cal(){
 		ncr[i][0]=1,ncr[i][i]=1;
 		for(int j=1; j<i; j++)
 		{
-			ncr[i][j]=(ncr[i-1][j]+ncr[i-1][j-1])%p;
+			ncr[i][j]=(ncr[i-1][j]+ncr[i-1][j-1]);
 		}
 	}
 	
@@ -36,6 +38,18 @@ long long binpow(long long a, long long b, long long m) {
         b >>= 1;
     }
     return res;
+}
+
+void cal1(){
+	fact[0]=1;
+	for(int i=1; i<1000000; i++)
+	{
+		fact[i]=(fact[i-1]*i)%p; //if(i<10)cout << fact[i]<<" ";
+	}
+	for(int i=0; i<1000000; i++)
+	{
+		inv[i]=binpow(fact[i],p-2,p);
+	}
 }
 
 int val(char x)
@@ -61,19 +75,30 @@ int bit(int x)
 		x=x/2;
 	}return c;
 }
+
+
 int32_t main() {
    ios_base::sync_with_stdio(false);
    cin.tie(NULL);cout.tie(NULL);
-   
+   cal1();
    int q=1 ;
    //cin >> t;
    while(q--)
-   {   int n,m,k;
-   	   cin >> n >> m >> k;
-   	   int d=0;
-   	   cal();
-   	   d=(nck(n-1,k)*((m*binpow(m-1,k,p))%p))%p;
-   	   cout << d;
+   {   int n;
+       cin >> n;
+       int ans=1,j=1;
+       for(int i=0; i<n ; i++)
+       {
+       	  int x;
+       	  cin >> x;
+       	  for(int k=0; k<x-1; k++)
+       	  {
+       	  	 ans=(ans*j)%p;
+       	  	 j++;
+       	  }j++;
+       	  ans = (ans*inv[x-1])%p;
+       } cout << ans;
+   	  
    }
                                                                                       
     return 0;
